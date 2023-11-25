@@ -118,7 +118,7 @@ int main(void)
 		  //HAL_GPIO_WritePin(GPIOB, GPIO_PIN_14, 0);
 		  //HAL_UART_Transmit(&huart3, (uint8_t *)"Hello Green\n", 15, 1000);
 		  //HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_0);//green
-		  //HAL_Delay(500);
+		  //HAL_Delay(500);/*comment*/
 	  }
 	  else if(BlinkSpeed == 1)
 	  {
