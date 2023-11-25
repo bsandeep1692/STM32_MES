@@ -104,7 +104,7 @@ int main(void)
 
   // Start timer
   HAL_TIM_Base_Start_IT(&htim13);
-
+  HAL_UART_Transmit(&huart3, "Main function\n\r" , strlen("Main function\n\r"), 1000);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -372,6 +372,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		{
 			if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13) == 1)
 			{
+				HAL_UART_Transmit(&huart3, "Button Pressed\n\r" , strlen("Button Pressed\n\r"), 1000);
 				if(BlinkSpeed == 2)
 				{
 					BlinkSpeed = 0;
