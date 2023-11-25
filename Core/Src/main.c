@@ -52,6 +52,7 @@ uint8_t BlinkSpeed = 0;
 uint8_t msg[20];
 uint8_t debounceRequest =0;
 uint8_t debounceCount = 0;
+uint8_t rx_buffer[10];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -111,6 +112,9 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  //HAL_UART_Receive(&huart3, rx_buffer, 10, 1000000); /*Blocking fucnction for UART RX*/
+	                                                       /* It stays blocked untill 10 bytes are recieved*/
+	  //while(1);
 	  if(BlinkSpeed == 0)
 	  {
 		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, 1);
