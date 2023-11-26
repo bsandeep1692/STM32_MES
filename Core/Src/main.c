@@ -49,10 +49,10 @@ PCD_HandleTypeDef hpcd_USB_OTG_FS;
 
 /* USER CODE BEGIN PV */
 uint8_t BlinkSpeed = 0;
-uint8_t msg[20];
+uint8_t tx_buffer[20];
 uint8_t debounceRequest =0;
 uint8_t debounceCount = 0;
-uint8_t rx_buffer[10];
+uint8_t rx_buffer[20];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -105,7 +105,7 @@ int main(void)
 
   // Start timer
   HAL_TIM_Base_Start_IT(&htim13);
-  HAL_UART_Transmit(&huart3, "Main function\n\r" , strlen("Main function\n\r"), 1000);
+  HAL_UART_Transmit_IT(&huart3, "Main function\n\r" , strlen("Main function\n\r"));
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -142,6 +142,7 @@ int main(void)
 		  //HAL_GPIO_WritePin(GPIOB, GPIO_PIN_14, 0);
 		  //HAL_UART_Transmit(&huart3, (uint8_t *)"Hello Red\n", 15, 1000);
 		  //test
+		  HAL_UART_Receive_IT(&huart3, rx_buffer, 10);
 	  }
 	  HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_14);//red
 	  HAL_Delay(50);
@@ -369,14 +370,13 @@ static void MX_GPIO_Init(void)
 /* Timer13 interupt that fires every 5 ms to check push button press and handle debouncing*/
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
-
 	if (htim == &htim13 )
 	{
 		if (!debounceRequest)
 		{
 			if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13) == 1)
 			{
-				HAL_UART_Transmit(&huart3, "Button Pressed\n\r" , strlen("Button Pressed\n\r"), 1000);
+				HAL_UART_Transmit_IT(&huart3, "Button Pressed\n\r" , strlen("Button Pressed\n\r"));
 				if(BlinkSpeed == 2)
 				{
 					BlinkSpeed = 0;
@@ -405,8 +405,17 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 			}
 		}
 	}
+}
 
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
+{
 
+}
+
+/* This RX interrupt gets triggered once x number of bytes are recieved*/
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+   HAL_UART_Transmit_IT(&huart3, "\n\rUART Recieved\n\r" , strlen("\n\rUART Recieved\n\r"));
 }
 /* USER CODE END 4 */
 
