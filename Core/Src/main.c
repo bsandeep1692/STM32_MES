@@ -21,7 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "console.h"  //for the cmd line interface
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -97,6 +97,7 @@ int main(void)
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
+
   MX_GPIO_Init();
   MX_USART3_UART_Init();
   MX_USB_OTG_FS_PCD_Init();
@@ -110,11 +111,13 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  ConsoleInit();
   while (1)
   {
 	  //HAL_UART_Receive(&huart3, rx_buffer, 10, 1000000); /*Blocking fucnction for UART RX*/
 	                                                       /* It stays blocked untill 10 bytes are recieved*/
 	  //while(1);
+	  ConsoleProcess();
 	  if(BlinkSpeed == 0)
 	  {
 		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, 1);
