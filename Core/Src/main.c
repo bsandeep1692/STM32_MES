@@ -97,7 +97,6 @@ int main(void)
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
-
   MX_GPIO_Init();
   MX_USART3_UART_Init();
   MX_USB_OTG_FS_PCD_Init();
@@ -106,7 +105,7 @@ int main(void)
 
   // Start timer
   HAL_TIM_Base_Start_IT(&htim13);
-  HAL_UART_Transmit(&huart3, "Main function\n\r" , strlen("Main function\n\r"), 1000);
+  HAL_UART_Transmit_IT(&huart3, "Main function\n\r" , strlen("Main function\n\r"));
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -379,7 +378,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		{
 			if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13) == 1)
 			{
-				HAL_UART_Transmit(&huart3, "Button Pressed\n\r" , strlen("Button Pressed\n\r"), 1000);
+				HAL_UART_Transmit_IT(&huart3, "Button Pressed\n\r" , strlen("Button Pressed\n\r"));
 				if(BlinkSpeed == 2)
 				{
 					BlinkSpeed = 0;
