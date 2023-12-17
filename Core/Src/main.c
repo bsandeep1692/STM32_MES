@@ -48,7 +48,7 @@ UART_HandleTypeDef huart3;
 PCD_HandleTypeDef hpcd_USB_OTG_FS;
 
 /* USER CODE BEGIN PV */
-uint8_t BlinkSpeed = 0; //test
+uint8_t BlinkSpeed = 0; //clitest2
 uint8_t msg[20];
 uint8_t debounceRequest =0;
 uint8_t debounceCount = 0;
