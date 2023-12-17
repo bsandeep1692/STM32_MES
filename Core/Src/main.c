@@ -21,7 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "console.h"  //for the cmd line interface
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -105,16 +105,18 @@ int main(void)
 
   // Start timer
   HAL_TIM_Base_Start_IT(&htim13);
-  HAL_UART_Transmit(&huart3, "Main function\n\r" , strlen("Main function\n\r"), 1000);
+  HAL_UART_Transmit_IT(&huart3, "Main function\n\r" , strlen("Main function\n\r"));
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  ConsoleInit();
   while (1)
   {
 	  //HAL_UART_Receive(&huart3, rx_buffer, 10, 1000000); /*Blocking fucnction for UART RX*/
 	                                                       /* It stays blocked untill 10 bytes are recieved*/
 	  //while(1);
+	  ConsoleProcess();
 	  if(BlinkSpeed == 0)
 	  {
 		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, 1);
@@ -376,7 +378,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		{
 			if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13) == 1)
 			{
-				HAL_UART_Transmit(&huart3, "Button Pressed\n\r" , strlen("Button Pressed\n\r"), 1000);
+				HAL_UART_Transmit_IT(&huart3, "Button Pressed\n\r" , strlen("Button Pressed\n\r"));
 				if(BlinkSpeed == 2)
 				{
 					BlinkSpeed = 0;
